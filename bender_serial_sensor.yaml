@@ -1,24 +1,26 @@
 esphome:
   name: wespuarttest
   friendly_name: WespUartTest
-  includes: 
-    - bender_serial_sensor.h
 
 esp32:
   board: wesp32
   framework:
     type: arduino
 
+external_components:
+  - source:
+      type: git
+      url: 'https://github.com/rbrtwtrs/bender-serial-sensor'
+      ref: 'main'
 
-# Enable logging
 logger:
   level: DEBUG
-  #level: VERBOSE #makes uart stream available in esphome logstream
 
+# Roberts HomeAssistant MQTT http://192.168.86.33/
 mqtt:
   broker: '192.168.86.33'
   username: homeassistant
-  password: !secret mqtt_password
+  password: zah9xeiwooce1ceedaing9eemeebaer8ie5Ievoo8zieyi0Ungoh8pee9Xiat7qu
 
 globals:
   - id: uart_buffer
@@ -29,10 +31,10 @@ globals:
 # Enable Home Assistant API
 api:
   encryption:
-    key: !secret api_key
+    key: "a7lR3WNPV10dEw/oUvEoOGMzost+iClOBTuzq2fM8K4="
 
 ota:
-  password: !secret ota_password
+  password: "59e1d59abf2e9d44e3f03bd671d77096"
 
 # Ethernet port on wESP32 
 ethernet:
@@ -85,9 +87,9 @@ sensor:
     
 custom_component:
   - lambda: |-
-      auto my_custom_sensor = new BenderSerialSensor();
-      my_custom_sensor->set_uart_parent(id(uart_bus));
-      my_custom_sensor->bender_sensors[0] = {id(bender_0_status), id(bender_0_resistance)};
-      my_custom_sensor->bender_sensors[1] = {id(bender_1_status), id(bender_1_resistance)};
-      my_custom_sensor->bender_sensors[2] = {id(bender_2_status), id(bender_2_resistance)};
-      return {my_custom_sensor};
+      auto bender_uart_sensor = new bender_serial_sensor::BenderSerialSensor();
+      bender_uart_sensor->set_uart_parent(id(uart_bus));
+      bender_uart_sensor->bender_sensors[0] = {id(bender_0_status), id(bender_0_resistance)};
+      bender_uart_sensor->bender_sensors[1] = {id(bender_1_status), id(bender_1_resistance)};
+      bender_uart_sensor->bender_sensors[2] = {id(bender_2_status), id(bender_2_resistance)};
+      return {bender_uart_sensor};
