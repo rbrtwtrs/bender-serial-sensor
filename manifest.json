@@ -1,0 +1,7 @@
+{
+  "name": "Bender Serial Sensor",
+  "version": "1.0.0",
+  "esphome_version": ">=2021.10.0",
+  "dependencies": [],
+  "description": "A custom sensor for interfacing with Bender units via a serial connection and parsing the data."
+}
